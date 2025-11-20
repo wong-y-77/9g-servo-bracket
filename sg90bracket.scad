@@ -99,7 +99,7 @@ module sg90_bracket_mask_2(h=36, t=15, big=true) {
     //translate([6,6,18.1]) cylinder(r=1.5,h=5,center=true);
 }
 
-module sg90_bracket_mount_holemask(radius=1.5,h=5,bracket=false) {
+module sg90_bracket_mount_holemask(radius=1.5,h=5,bracket=false,joinplate=false) {
     offset = 4.5;
     
 	translate([offset,offset,0]) cylinder(r=radius,h=h,center=true);
@@ -373,20 +373,21 @@ module sg92r_arm(r=r,t=15,h=30) {
     translate([33,-31,0]) rotate([270,0,90]) sg90_servomount_base();
     //color([1,1,0]) translate([32,-43.5,0]) rotate([90,0,90]) sg90_plate_join();
     //color([0,0,1]) translate([29,-27,0]) rotate([180,270,0]) sg90_bracket_2(r=r,t=t,h=h+11);
-    color([0,0,1]) translate([33,-31,0]) rotate([180,270,0]) sg90_bracket_2(r=r,t=t,h=h+11);
+    color([0,0,1]) translate([33+0.2,-31,0]) rotate([180,90,0]) sg90_bracket_2(r=r,t=t,h=h+11);
     
+    translate([12.5+0.2,-9.5,0]) sg90_bracket_mount_raiser();
+    
+    //rotate([180,0,0]) translate([0,19,0]) {
     // level 1
-    color([1,1,1]) translate([4,-4,0]) rotate([0,0,270]) sg90_servomount();
-    color([0,0,1]) translate([4,-4,0]) sg90_bracket_2(r=r,t=t,h=h+11);
-    
-    //color([1,1,0]) translate([-9.5,-35.5,0]) rotate([90,0,90]) sg90_plate_join();
-    
-    color([1,1,1]) translate([-21,-47.5,0]) sg90_servomount_ext();
-    color([0,0.5,0.5]) translate([-21,-47.5,0]) rotate([0,0,180]) sg90_bracket_2(r=r,t=t,h=h+11+11);
+    color([1,1,1]) translate([1+0.2,-4,0]) rotate([0,0,270]) sg90_servomount();
+    color([0,0,1]) translate([1+0.2,-4,0-0.1]) sg90_bracket_2(r=r,t=t,h=h+11);
+        
+    color([1,1,1]) translate([-24,-47.5,0]) sg90_servomount_ext();
+    color([0,0.5,0.5]) translate([-24,-47.5,0]) rotate([0,0,180]) sg90_bracket_2(r=r,t=t,h=h+11+11);
     
     
     
-    color([1,1,1]) translate([-15,-4+11,0]) rotate([0,0,180]) sg90_servomount();
+    color([1,1,1]) translate([-18,-4+11,0]) rotate([0,0,180]) sg90_servomount();
     //color([0,1,1]) translate([-19,-4+11,0]) rotate([0,0,180]) sg90_bracket_servomount(r=r,t=15+2,h=h+11);
     //#translate([-19,36.5+11,5]) rotate([0,90,90]) sg90();        
     //translate([-14.5,40,-7]) rotate([90,0,0])gripper_mount();
@@ -397,9 +398,11 @@ module sg92r_arm(r=r,t=15,h=30) {
     //translate([-14.5,40,-12.5]) rotate([90,0,0])gripper_mount();
     //#translate([-10,66.5,0]) rotate([90,0,90]) sg90(); 
     
-    color([0,1,1]) translate([-15,-4+11,0]) rotate([0,0,180]) sg90_bracket_servomount(r=r,t=15+2,h=h+11);
-    #translate([-15,36.5+10,-5]) rotate([90,270,180]) sg90();        
-    translate([-11,40,-17.5]) rotate([90,0,0])gripper_mount();
+    union() translate([-10.2,-10.6,0]) rotate([0,0,-45]) {
+    color([0,1,1]) translate([-18,-4+11,0]) rotate([0,0,180]) sg90_bracket_servomount(r=r,t=15+2,h=h+11);
+    #translate([-18,36.5+10,-5]) rotate([90,270,180]) sg90();        
+    translate([-15,40,-17.5]) rotate([90,0,0])gripper_mount();
+    }
     //#translate([-10,66.5,0]) rotate([90,0,90]) sg90(); 
      
     
@@ -409,7 +412,31 @@ module sg92r_arm(r=r,t=15,h=30) {
 	//translate([0,0,-12.5]) rotate([0,0,r])sg90_axis_mount_2();	
     //sg90_sidemount_2(r=r);
     //translate([0,-5.5,25]) rotate([0,270,0]) sg90_sidemount_2(r=r);
+    //}
 }
+
+
+module sg92r_quadrapod(r=r,t=15,h=30) {
+    color([0,0,1]) sg90_servomount();
+    color([0,0,1]) translate([0,0,0]) rotate([0,0,0]) sg90_bracket_2(r=r,t=t,h=h+11);
+    
+    translate([5.5,20,5.5]) rotate([0,90,180]) sg90_servomount();
+    translate([5.5,20,5.5]) rotate([0,90,180]) sg90_bracket_2(r=r,t=t,h=h);
+    
+    // servo base
+    //translate([33,-31,0]) rotate([270,0,90]) sg90_servomount_base();
+    //color([1,1,0]) translate([32,-43.5,0]) rotate([90,0,90]) sg90_plate_join();
+    //color([0,0,1]) translate([29,-27,0]) rotate([180,270,0]) sg90_bracket_2(r=r,t=t,h=h+11);
+    //color([0,0,1]) translate([33,-31,0]) rotate([180,270,0]) sg90_bracket_2(r=r,t=t,h=h+11);
+    
+    //translate([12.5,-10,0]) sg90_bracket_mount_raiser();
+    
+    //rotate([180,0,0]) translate([0,19,0]) {
+    // level 1
+    //color([1,1,1]) translate([1,-4,0]) rotate([0,0,270]) sg90_servomount();
+    //color([0,0,1]) translate([1,-4,0]) sg90_bracket_2(r=r,t=t,h=h+11);    
+}
+
 
 module sg90_servomount(r=r,h=4) {
     $fn=60;
@@ -501,7 +528,7 @@ module sg90_servomount_ext(r=r,h=4) {
 // nut and rings 3.6mm
 // nut 2.6mm 5.3 6.1
 // thickness 6.4
-module sg90_servomount_base(r=r,h=4) {
+module sg90_servomount_base(r=0,h=4) {
     $fn=60;
     
 	rotate([0,0,r]) {  
@@ -683,10 +710,11 @@ module gripper_015_drive_gear(big=false) {
     //sg90_mount();    
     //sg90_mount_2(t=15, h=30);
     //translate([0,0,50])
-    sg92r_arm();
+    //sg92r_arm();
+    //color([0.1,0.1,0.1]) translate([13.5,-40,20]) rotate([90,0,45]) cube([1,1,30],center=true);
     //sg90_bracket_servomount_v();
     //sg90_arm_base();
-    ///sg90_servomount_base(r=270);
+    sg90_servomount_base(r=270);
     //sg90_plate_join();
     //rotate([0,180,0])sg90_servomount(r=90);
     //sg90_servomount_join_arm(h=36);
@@ -694,4 +722,5 @@ module gripper_015_drive_gear(big=false) {
     ///bracket_ring();
     //gripper_mount(big=false);
     //gripper_015_drive_gear();
+    //sg92r_quadrapod();
 }
